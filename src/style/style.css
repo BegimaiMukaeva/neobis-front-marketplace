@@ -1,0 +1,755 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Quicksand, Arial, sans-serif;
+}
+.container {
+    width: 100%;
+    height: 100vh;
+}
+input:focus, textarea:focus {
+  outline: none;
+}
+/*/////////////////////Mobi market page//////////////////*/
+.mobiMarketImg img {
+    height: 99vh;
+}
+/*/////////////////////////////login page////////////////*/
+.mobi-market {
+    display: flex;
+    justify-content: space-between;
+    /*align-items: center;*/
+}
+.mobi-market__login {
+    margin-top: 160px;
+}
+.mobi-market__input {
+    width: 435px;
+    height: 35px;
+    padding: 10px 0 10px 0;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid grey;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 15px;
+    color: #C0C0C0;
+    margin-bottom: 44px;
+}
+.mobi-market__login-btn {
+    width: 435px;
+    height: 44px;
+    padding: 10px;
+    border-radius: 80px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 15px;
+    border: none;
+    color: white;
+}
+.mobi-market__sign-up-btn {
+    height: 44px;
+    width: 435px;
+    font-size: 14px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5458EA;
+    text-decoration: none;
+    margin-top: 70px;
+}
+.input-container {
+    position: relative;
+}
+.mobi-market__input[type="text"] {
+    padding-top: 30px;
+    transition: border-color 0.3s;
+    font-size: 16px;
+    outline: none;
+}
+.mobi-market__input[type="password"] {
+    padding-top: 30px;
+    transition: border-color 0.3s;
+    font-size: 16px;
+    outline: none;
+}
+.mobi-market__label {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    transition: top 0.3s, font-size 0.3s;
+    pointer-events: none;
+}
+.mobi-market__input[type="text"]:focus + label {
+    top: 0;
+    font-size: 12px;
+    color: #C0C0C0;
+    border: none;
+}
+.mobi-market__input[type="password"]:focus + label {
+    top: 0;
+    font-size: 12px;
+    color: #C0C0C0;
+    border: none;
+}
+.mobi-market__input.active {
+  border-color: dodgerblue;
+}
+.mobi-market__label.active {
+  top: 0;
+  font-size: 12px;
+  color: dodgerblue;
+}
+.dont-show-pass {
+    position: relative;
+    left: 200px;
+    bottom: 69px;
+    border: none;
+    background: url("../img/eye.svg");
+    background-color: inherit;
+    width: 24px;
+    height: 24px;
+}
+.show-password {
+    position: relative;
+    left: 200px;
+    bottom: 69px;
+    border: none;
+    background: url("../img/eye-disable.svg");
+    background-color: inherit;
+    width: 24px;
+    height: 24px;
+}
+.active-btn {
+    background: #5458EA;
+    cursor: pointer;
+}
+.not-active {
+    background: #C0C0C0;
+}
+/*////////////////////////////SignUp///////////////////////*/
+.back-button {
+    display: flex;
+    align-items: center;
+    margin-left: -240px;
+    margin-bottom: 100px;
+    margin-top: 20px;
+}
+.mobi-market__back-text {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 15px;
+    text-decoration: none;
+    color: #000000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.mobi-market__back-text  img {
+    margin-right: 6px;
+}
+.back-button h2 {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 17px;
+    margin-left: 290px;
+}
+.locked-style {
+    margin-top: 200px;
+}
+/*///////////////////////////////////PasswordPage////////////////*/
+.mobi-market__lock {
+    width: 435px;
+    margin-right: 300px;
+    text-align: center;
+}
+.show-password-password {
+    border: none;
+    background: url("../img/eye-disable.svg");
+    background-color: inherit;
+    width: 24px;
+    height: 24px;
+    margin-left: 270px;
+}
+.dont-show-password {
+    border: none;
+    background: url("../img/eye.svg");
+    background-color: inherit;
+    width: 24px;
+    height: 24px;
+    margin-left: 270px;
+}
+.mobi-market__lock h3 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 19px;
+}
+.mobi-market__lock p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    color: #C0C0C0;
+    margin-top: 10px;
+    margin-bottom: 28px;
+}
+.mobi-market__lock  .error-message {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    color: #f61010;
+    margin-top: 10px;
+    margin-bottom: 28px;
+}
+
+/*//////////////////////////////////////ProfilePage/////////*/
+
+.profile-page {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(141, 140, 140, 0.13);
+
+}
+.profile-menu {
+    width: 30%;
+    background-color: white;
+    padding-top: 25px;
+    padding-left: 45px;
+}
+.profile-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 100px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+.profile-info {
+    display: flex;
+    align-items: center;
+}
+.profile-menu-options {
+    margin-top: 40px;
+}
+.profile-menu-options__menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 13px;
+}
+.profile-menu-options__menu div {
+    height: 38px;
+    display: flex;
+    align-items: center;
+}
+.profile-menu-options__menu-img {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.profile-menu-options__menu-direction-right {
+    margin-top: 10px;
+}
+.profile-menu-options__like {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #494949;
+}
+.profile-menu-options__menu_button {
+    margin-top: 55px;
+}
+.profile-menu-options button {
+    font-size: 16px;
+    line-height: 24px;
+    background-color: white;
+    border: none;
+    font-weight: 600;
+    margin-left: 7px;
+    color: #494949;
+    cursor: pointer;
+}
+.profile-menu-options a {
+    text-decoration: none;
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    line-height: 24px;
+    color: #494949;
+}
+.profile-info__text a {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    color: black;
+    text-decoration: none;
+}
+/*///////profile-content/////*/
+.profile-content {
+    padding-top: 15px;
+    width: 70%;
+    height: 100vh;
+    /*background-color: rgba(141, 140, 140, 0.13);*/
+  /*margin-top: 20px;*/
+  /*background-color: #fff;*/
+  /*padding: 20px;*/
+  /*border-radius: 10px;*/
+  /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);*/
+}
+.back-button-profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 100px;
+    margin-top: 20px;
+    margin-left: 100px;
+}
+.back-button-profile h2 {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 17px;
+    color: #494949;
+    margin-left: 250px;
+}
+.profile-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+.profile-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profile-form input {
+    display: flex;
+    width: 600px;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+}
+.profile-form p {
+    display: flex;
+    width: 600px;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+    background-color: white;
+    color: #8d8c8c;
+}
+.add-number {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 600px;
+    height: 35px;
+    background-color: white;
+    padding: 0 10px;
+    border-radius: 3px;
+    margin-left: 237px;
+}
+.add-number button {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    color: #5458EA;
+    border: none;
+    background-color: inherit;
+}
+.add-number input {
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+    background-color: transparent;
+
+}
+input:focus {
+  outline: none;
+}
+.profile-image-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.profile-image-input {
+    color: #5458EA;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    cursor: pointer;
+    margin-top: 13px;
+    margin-left: -90px;
+}
+    /* Стили для модального окна */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .modal-buttons button {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .modal-buttons .confirm-button {
+      background-color: #ff3333;
+      color: #fff;
+    }
+
+    .modal-buttons .cancel-button {
+      background-color: #ccc;
+      color: #333;
+    }
+/*//////////////////////////////product-card///////////////////*/
+.product-cards {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px 95px;
+}
+.product-card {
+    width: 154px;
+    height: 184px;
+    padding: 6px;
+    border-radius: 12px;
+    background-color: white;
+    margin: 6px;
+}
+.product-card img {
+    width: 142px;
+    height: 85px;
+    border-radius: 6px;
+}
+.product-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 17px;
+    margin-top: 5px;
+}
+.product-card p {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 17px;
+    color: #5D5FEF;
+    margin-top: 5px;
+}
+.like-button-block {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+.like-button-block span {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 11px;
+    color: #C1C1C1;
+    margin-left: 7px;
+}
+.like-button {
+    width: 20px;
+    height: 17px;
+    border: none;
+    background-color: inherit;
+}
+.like-button img {
+    width: 20px;
+    height: 17px;
+}
+/*//////////////////////////favorite-page////////////////////////*/
+.favorite-page {
+    display: flex;
+    background-color: rgba(141, 140, 140, 0.13);
+    height: 100vh;
+    width: 100%;
+}
+
+/*///////////////////////////////product-modal///////////////*/
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.product-information-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    padding: 25px;
+    width: 460px;
+    max-height: 600px;
+    overflow-y: auto;
+    border-radius: 30px;
+}
+.close-button {
+    position: absolute;
+    z-index: 2000;
+    top: 10px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+.close-button img{
+    width: 15px;
+    height: 15px;
+}
+.product-images img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+.product-information-modal p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #C0C0C0;
+}
+.like-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.product-information-modal h4 {
+    font-size: 18px;
+    margin-top: 5px;
+}
+.product-information-modal .product-information-modal__price {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 23px;
+    color: #5458EA;
+}
+/*/////////////////////////////MyProductCard////////////////*/
+
+.menu-button {
+    width: 15px;
+    height: 15px;
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+    margin-left: 85px;
+}
+.menu-button .menu-button__img {
+    width: 15px;
+    height: 15px;
+}
+
+/*/////////edit-delete-buttons//////////////////////*/
+.edit-delete-buttons {
+    width: 120px;
+    height: 78px;
+    padding: 6px;
+    border-radius: 10px;
+    background-color: white;
+    position: relative;
+    left: 110px;
+    bottom: 25px;
+    /*z-index: 1000;*/
+}
+.edit-delete-buttons div {
+    display: flex;
+    align-items: center;
+    margin: 4px;
+}
+.edit-delete-buttons img {
+    width: 24px;
+    height:24px;
+}
+.edit-delete-buttons button {
+    width: 77px;
+    height: 24px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #494949;
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+}
+
+/*///////////////////////////////product-information-modal//////////////*/
+.product-information-modal input {
+    width: 97%;
+    height: 40px;
+    margin: 5px;
+    background: #F7F6F9;
+    border: none;
+    border-radius: 12px;
+    padding: 5px;
+}
+.product-information-images img {
+    max-width: 400px;
+    height: auto;
+    margin-bottom: 10px;
+    margin-top: 20px;
+
+}
+.product-information-modal textarea {
+    width: 97%;
+    height: 80px;
+    background: #F7F6F9;
+    margin: 5px;
+    border: none;
+    border-radius: 12px;
+    padding: 5px;
+}
+.save-information {
+    width: 280px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 16px;
+    gap: 10px;
+    background: #5D5FEF;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 15px;
+    color: white;
+    border: none;
+    margin-left: 70px;
+    cursor: pointer;
+}
+/*//////////////////////delete-product-modal/////////////*/
+
+.delete-product-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    width: 292px;
+    height: 291px;
+    overflow-y: auto;
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+}
+.delete-product img{
+    width: 80px;
+    height: 100px;
+    margin-left: 80px;
+}
+.delete-product h2 {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 22px;
+    text-align: center;
+    margin: 4px 0;
+}
+.delete-product button {
+    width: 100%;
+    height: 44px;
+    padding: 10px;
+    border-radius: 16px;
+    gap: 10px;
+    border: none;
+    margin: 5px 0;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 15px;
+    cursor: pointer;
+}
+.delete-product .delete-button {
+    background: #5D5FEF;
+    color: white;
+}
+.delete-product a {
+    text-decoration: none;
+    color: white;
+}
+/*////////////////////////main-page////////////////////*/
+.main-page {
+    padding: 24px 30px;
+    background-color: rgba(141, 140, 140, 0.13);
+    height: 100vh;
+}
+.header {
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.header__button {
+    display: flex;
+    align-items: center;
+}
+.header__button a {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 24px;
+    text-decoration: none;
+    color: black;
+}
+.header__button button {
+    width: 200px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 80px;
+    gap: 10px;
+    background: #5458EA;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 15px;
+    border: none;
+    margin-right: 10px;
+}
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+.user-profile p {
+    margin-right: 10px;
+}
+/*////////////////////add-product////////////////////*/
+
+.add-product-button {
+    width: 97%;
+    height: 40px;
+    margin: 5px;
+    background: #F7F6F9;
+    border: none;
+    border-radius: 12px;
+    padding: 5px;
+}
