@@ -4,11 +4,14 @@ import MyProductCard from "../components/MyProductCard";
 import MyProductModal from "../components/MyProductModal";
 import {Link} from "react-router-dom";
 import backButton from "../img/back-icon.svg";
+import autoProfileImage from "../img/human-profeli-min.svg";
 
 const MyProductPage = () => {
   const [products, setProducts] = useState([]); // Список товаров
   const [selectedProduct, setSelectedProduct] = useState(null); // Выбранный товар для модального окна
 
+  const username = "bemchik";
+  const email = "begimai@gmail.com";
   const initialProducts = [
     {
       id: 1,
@@ -45,7 +48,11 @@ const MyProductPage = () => {
 
   return (
     <div className="favorite-page">
-      <ProfileMenu />
+      <ProfileMenu
+        username={username}
+        email={email}
+        isChoosingProfileImage={autoProfileImage}
+      />
       <div className="favorite-products">
         <div className="back-button-profile">
             <Link to="/main-page" className='mobi-market__back-text'>

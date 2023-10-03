@@ -20,7 +20,7 @@ function App() {
               <Route path='/' element={<LoginPage />} />
               <Route path='/creat-new-user' element={<SignUp setUserData={setUserData} />}/>
               <Route path='/password' element={<PasswordPage userData={userData} />}/>
-              <Route path="/confirm-password/:password" element={<ConfirmPasswordPage />}  />
+              <Route path="/confirm-password" element={<ConfirmPasswordPage />}  />
               <Route path="/success-sign-up" element={<ProfilePage />} />
               <Route path="/favorites" element={<FavoritePage />} />
               <Route path="/my-products" element={<MyProductPage />} />

@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { setUserData } from "../redux/actions.js";
 import MobiMarket from "../components/MobiMarket.jsx";
 import axios from 'axios';
 
+
 const LoginPage = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
@@ -34,46 +32,43 @@ const LoginPage = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+const handleLogin = async (e) => {
+  e.preventDefault();
 
-    try {
-      const userData = {
-        username: username,
-        password: password,
-      };
+  try {
+    const userData = {
+      login: username,
+      password: password,
+    };
 
-      const response = await axios.post(
-        'http://207.154.198.7:8000/auth/login',
-        userData,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'accept': 'application/json',
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        const { username, tokens } = response.data;
-        dispatch(setUserData(username, tokens.access));
-
-        navigate('/profile');
-      } else {
-        toast.error("Неверный логин или пароль", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeButton: false,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "colored",
-        });
+    const response = await axios.post(
+      'https://neobis-project-2.up.railway.app/api/auth/log\n',
+      userData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        },
       }
-    } catch (error) {
-      console.error("Error logging in:", error);
+    );
+    if (response.data.status === 200) {
+      navigate("/success-sign-up");
+    } else {
+      throw new Error("Неверный статус ответа");
     }
-  };
+  } catch (error) {
+    console.error("Error logging in:", error);
+    toast.error("Неверный логин или пароль", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeButton: false,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "colored",
+    });
+  }
+};
 
   return (
     <div className="container">

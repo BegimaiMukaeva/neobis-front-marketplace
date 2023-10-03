@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import backButton from '../img/back-icon.svg';
 import MobiMarket from "../components/MobiMarket";
 import lockImg from '../img/lock-img.svg';
 import axios from 'axios';
 
 const ConfirmPasswordPage = () => {
-  const { password: savedPassword } = useParams();
+  const savedPassword = localStorage.getItem("tempPassword"); // Извлекаем пароль из localStorage
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isButtonActive, setIsButtonActive] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -39,7 +39,7 @@ const ConfirmPasswordPage = () => {
         const email = localStorage.getItem("tempEmail");
 
         const response = await axios.post(
-          'http://207.154.198.7:8000/auth/register',
+          'http://neobis-project-2-production.up.railway.app/api/auth/register',
           {
             login: username,
             email: email,
@@ -50,7 +50,8 @@ const ConfirmPasswordPage = () => {
         if (response.status === 200) {
           localStorage.removeItem("tempUsername");
           localStorage.removeItem("tempEmail");
-          navigate("/");
+          localStorage.removeItem("tempPassword"); // Не забудьте удалить пароль после использования
+          navigate("/success-sign-up");
         } else {
           console.error("Error creating user:", response.data.message);
         }
@@ -61,38 +62,37 @@ const ConfirmPasswordPage = () => {
   };
 
   return (
-    <div className="container">
-      <div className="mobi-market">
-        <div>
-          <MobiMarket />
-        </div>
-        <div>
-          <div className="back-button">
-            <Link to="/" className="mobi-market__back-text">
-              <img src={backButton} alt="" />
-              Назад
-            </Link>
-            <h2>Регистрация</h2>
-            <button
+      <div className="container">
+       <div className="mobi-market">
+         <div>
+           <MobiMarket />
+         </div>
+         <div>
+           <div className="back-button">
+             <Link to="/password" className="mobi-market__back-text">
+               <img src={backButton} alt="" />
+               Назад
+             </Link>
+             <h2>Регистрация</h2>
+             <button
               onClick={handleToggleShowPassword}
               className={`toggle-password-btn ${
                 showPassword ? "show-password-password" : "dont-show-password"
               }`}
               type="button"
             >
-              {/* Добавьте иконку для показа/скрытия пароля */}
             </button>
           </div>
           <div className="mobi-market__lock">
             <img src={lockImg} alt=""/>
             <h3>Повторите пароль</h3>
-            <p>Минимальная длина — 8 символов. <br/> Для надежности пароль должен <br/> содержать буквы и цифры.</p>
+            <p>Минимальная длина — 8 символов. Для надежности пароль должен содержать буквы и цифры.</p>
             <div className="input-container">
               <input
                 className="mobi-market__input myInput"
                 type={showPassword ? "text" : "password"}
                 placeholder=" "
-                value={savedPassword} // Вместо confirmPassword используем savedPassword
+                value={savedPassword}
                 readOnly
               />
             </div>

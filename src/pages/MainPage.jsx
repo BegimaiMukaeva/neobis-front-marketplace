@@ -27,11 +27,15 @@ const MainPage = () => {
     },
   ];
   const handleAddProduct = (productInfo, images) => {
-
+    setIsAddProductModalOpen(false);
+  };
+  const handleCloseModal = () => {
     setIsAddProductModalOpen(false);
   };
 
-  const username = "Имя пользователя";
+
+  const username = "bemchik";
+  const email = "begimai@gmail.com";
 
   return (
     <div className="main-page">
@@ -47,14 +51,14 @@ const MainPage = () => {
                   <div className="user-profile">
                       <div>
                           <p>{username}</p>
-                          <p>{username}</p>
+                          <p>{email}</p>
                       </div>
                       <img src={autoProfileImage} alt="Фото профиля" />
                   </div>
               </Link>
           </div>
       </header>
-      {isAddProductModalOpen && <AddProduct onAddProduct={handleAddProduct} />}
+      {isAddProductModalOpen && <AddProduct onAddProduct={handleAddProduct} onCancel={handleCloseModal} />}
       <div className="product-list">
         {initialProducts.map((product) => (
           <MainProduct

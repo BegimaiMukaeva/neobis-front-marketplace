@@ -4,14 +4,9 @@ import { toast } from "react-toastify";
 import MobiMarket from "../components/MobiMarket";
 import backButton from '../img/back-icon.svg';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { resetUserExists, setUserExists } from '../redux/actions';
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const userExists = useSelector(state => state.signup.userExists);
 
   const [username, setUsername] = useState(localStorage.getItem("tempUsername") || "");
   const [email, setEmail] = useState(localStorage.getItem("tempEmail") || "");
@@ -31,77 +26,54 @@ const SignUp = () => {
 
   const validateForm = (username, email) => {
     const isUsernameValid = /^[a-zA-Z]+$/.test(username);
-    const isEmailValid = /^[a-zA-Z]+@[a-zA-Z]+\.[A-Za-z]+$/.test(email);
+    const isEmailValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
 
     setIsButtonActive(isUsernameValid && isEmailValid);
   };
 
   const handleNextClick = async () => {
     try {
-      const userData = {
-        username: username,
-        email: email,
-      };
-
-      const response = await axios.post(
-        'http://207.154.198.7:8000/auth/register',
-        userData,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'accept': 'application/json',
-          },
-        }
+      const response = await axios.get(
+        `https://neobis-project-2.up.railway.app/api/auth/credentialsCheck?login=${username}&email=${email}`
       );
 
-      if (response.status === 200 || response.status === 201) {
-        dispatch(resetUserExists()); // Сбрасываем флаг о существующем пользователе
+      if (response.data) {
+        toast.error("Данный пользователь уже зарегистрирован", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeButton: false,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "light",
+        });
+      } else {
         localStorage.setItem("tempUsername", username);
         localStorage.setItem("tempEmail", email);
         navigate("/password");
       }
     } catch (error) {
-      if (error.response && error.response.data) {
-        const { username, email } = error.response.data;
-        if (
-          (username && username.includes("user с таким username уже существует.")) ||
-          (email && email.includes("user с таким email уже существует."))
-        ) {
-          dispatch(setUserExists(true));
-          toast.error("Данный пользователь уже зарегистрирован", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeButton: false,
-            pauseOnHover: true,
-            draggable: true,
-            theme: "light",
-          });
-        } else {
-          dispatch(setUserExists(false));
-          console.error("Error registering user:", error);
-        }
-      }
+      console.error("Error checking credentials:", error);
     }
   };
 
   return (
-    <div className="container">
-      <div className="mobi-market">
-        <div>
-          <MobiMarket />
-        </div>
-        <div>
-          <div className="back-button">
-            <Link to="/" className='mobi-market__back-text'>
-              <img src={backButton} alt=""/>
-              Назад
-            </Link>
-            <h2>Регистрация</h2>
-          </div>
-          <div className="mobi-market__lock locked-style">
-            <div className="input-container">
-              <input
+     <div className="container">
+       <div className="mobi-market">
+         <div>
+           <MobiMarket />
+         </div>
+         <div>
+           <div className="back-button">
+             <Link to="/" className='mobi-market__back-text'>
+               <img src={backButton} alt=""/>
+               Назад
+             </Link>
+             <h2>Регистрация</h2>
+           </div>
+           <div className="mobi-market__lock locked-style">
+             <div className="input-container">
+             <input
                 className={`mobi-market__input myInput ${
                   username ? "active" : ""
                 }`}
@@ -143,7 +115,7 @@ const SignUp = () => {
                   isButtonActive ? "active-btn" : "not-active"
               }`}
               onClick={handleNextClick}
-              disabled={!isButtonActive || userExists}
+              disabled={!isButtonActive}
             >
               Далее
             </button>

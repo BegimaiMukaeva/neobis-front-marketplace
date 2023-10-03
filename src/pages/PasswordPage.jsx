@@ -43,6 +43,7 @@ const PasswordPage = () => {
       );
       return;
     }
+    navigate("/confirm-password:password");localStorage.setItem("tempPassword", password);
     navigate("/confirm-password");
   };
 

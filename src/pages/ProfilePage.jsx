@@ -13,7 +13,9 @@ const ProfilePage = () => {
   const [isChoosingProfileImage, setIsChoosingProfileImage] = useState(true);
   const [chosenImage, setChosenImage] = useState("");
 
-  const { username, email } = useSelector((state) => state.user);
+  // const { username, email } = useSelector((state) => state.user);
+  const username = "bemchik";
+  const email = "begimai@gmail.com";
 
   const [userData, setUserData] = useState({
     username: "",
@@ -32,12 +34,15 @@ const ProfilePage = () => {
     setIsModalOpen(true);
   };
 
+  const closeModalNumber = () => {
+    setIsModalNumberOpen(false);
+  };
   const openModalNumber = () => {
-    setIsModalNumberOpen(true);
+      setIsModalNumberOpen(true);
   };
 
+
   const handleLogoutConfirm = () => {
-    // Добавьте здесь логику выхода из аккаунта
   };
 
   const handleLogoutCancel = () => {
@@ -130,8 +135,8 @@ const ProfilePage = () => {
             <input
               type="text"
               name="middleName"
-              placeholder="Отчество"
-              value={userData.middleName}
+              placeholder="Имя пользователя"
+              value={userData.username}
               onChange={handleNameInputChange}
             />
             <input
@@ -144,14 +149,14 @@ const ProfilePage = () => {
           </form>
         </div>
         <div className='add-number'>
-          <button
-            className="add-number-button"
-            onClick={openModalNumber}
-          >
+          <button className="add-number-button" onClick={openModalNumber}>
             Добавить номер
           </button>
           {isModalNumberOpen && (
-            <ModalNumber isOpen={isModalNumberOpen} />
+            <ModalNumber
+              isOpen={isModalNumberOpen}
+              onCancel={closeModalNumber}
+            />
           )}
           <input
             type="text"

@@ -1,31 +1,30 @@
-
 const initialState = {
-  username: "",
-  email: "",
+  username: '',
+  email: '',
   userExists: false,
 };
 
-const userReducer = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_USER_DATA":
+    case 'SET_USER_DATA':
       return {
         ...state,
-        username: action.username,
-        email: action.email,
+        username: action.payload.username,
+        email: action.payload.email,
       };
-    case "RESET_USER_EXISTS":
+    case 'RESET_USER_EXISTS':
       return {
         ...state,
         userExists: false,
       };
-    case "SET_USER_EXISTS":
+    case 'SET_USER_EXISTS':
       return {
         ...state,
-        userExists: action.userExists,
+        userExists: action.payload,
       };
     default:
       return state;
   }
 };
 
-export default userReducer;
+export default reducer;
