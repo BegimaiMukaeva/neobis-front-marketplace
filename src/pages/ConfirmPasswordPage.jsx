@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import backButton from '../img/back-icon.svg';
+import { useSelector, useDispatch } from "react-redux";
 import MobiMarket from "../components/MobiMarket";
-import lockImg from '../img/lock-img.svg';
+import backButton from '../img/back-icon.svg';
 import axios from 'axios';
+import lockImg from '../img/lock-img.svg';
+// import { setUserData } from "../redux/userSlice";
+import {toast} from "react-toastify";
 
 const ConfirmPasswordPage = () => {
-  const savedPassword = localStorage.getItem("tempPassword"); // Извлекаем пароль из localStorage
+  const navigate = useNavigate();
+  const username = useSelector(state => state.user.username);
+  const email = useSelector(state => state.user.email);
+  const dispatch = useDispatch();
+
+  const savedPassword = localStorage.getItem("tempPassword");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isButtonActive, setIsButtonActive] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     setIsButtonActive(confirmPassword === savedPassword);
@@ -20,6 +28,9 @@ const ConfirmPasswordPage = () => {
     } else {
       setErrorMessage("");
     }
+    console.log("Username:", username);
+    console.log("Email:", email);
+    console.log("pas:", confirmPassword);
   }, [confirmPassword, savedPassword]);
 
   const handleConfirmPasswordChange = (e) => {
@@ -35,11 +46,8 @@ const ConfirmPasswordPage = () => {
       setErrorMessage("Пароли не совпадают");
     } else {
       try {
-        const username = localStorage.getItem("tempUsername");
-        const email = localStorage.getItem("tempEmail");
-
         const response = await axios.post(
-          'http://neobis-project-2-production.up.railway.app/api/auth/register',
+          'https://neobis-project-2.up.railway.app/api/auth/register',
           {
             login: username,
             email: email,
@@ -48,10 +56,15 @@ const ConfirmPasswordPage = () => {
         );
 
         if (response.status === 200) {
-          localStorage.removeItem("tempUsername");
-          localStorage.removeItem("tempEmail");
-          localStorage.removeItem("tempPassword"); // Не забудьте удалить пароль после использования
-          navigate("/success-sign-up");
+          localStorage.removeItem("tempPassword");
+          // dispatch(setUserData({ username, email }));
+          navigate("/");
+
+          toast.success("Регистрация прошла успешно!", {
+          position: "top-right",
+          autoClose: 4000,
+          theme: "light",
+          });
         } else {
           console.error("Error creating user:", response.data.message);
         }
@@ -62,29 +75,28 @@ const ConfirmPasswordPage = () => {
   };
 
   return (
-      <div className="container">
-       <div className="mobi-market">
-         <div>
-           <MobiMarket />
-         </div>
-         <div>
-           <div className="back-button">
-             <Link to="/password" className="mobi-market__back-text">
-               <img src={backButton} alt="" />
-               Назад
-             </Link>
-             <h2>Регистрация</h2>
-             <button
+    <div className="container">
+      <div className="mobi-market">
+        <div>
+          <MobiMarket />
+        </div>
+        <div>
+          <div className="back-button">
+            <Link to="/password" className="mobi-market__back-text">
+              <img src={backButton} alt="" />
+              Назад
+            </Link>
+            <h2>Регистрация</h2>
+            <button
               onClick={handleToggleShowPassword}
               className={`toggle-password-btn ${
                 showPassword ? "show-password-password" : "dont-show-password"
               }`}
-              type="button"
-            >
+              type="button">
             </button>
           </div>
           <div className="mobi-market__lock">
-            <img src={lockImg} alt=""/>
+            <img src={lockImg} alt="" />
             <h3>Повторите пароль</h3>
             <p>Минимальная длина — 8 символов. Для надежности пароль должен содержать буквы и цифры.</p>
             <div className="input-container">

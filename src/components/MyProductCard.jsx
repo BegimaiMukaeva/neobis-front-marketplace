@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import MyProductModal from "./MyProductModal";
-import DeleteProductModal from "./DeleteProductModal";
 import EditDeleteButtons from "./EditDeleteButtons";
-import carPng from '../img/car.png'
 import likeImg from '../img/like.svg'
 import menuButton from '../img/menu-buttonn.svg';
 
 const MyProductCard = ({ product, onLikeClick, onDeleteClick }) => {
   const [isMyProductModalOpen, setIsMyProductModalOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
-  const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] = useState(false);
   const [isEditDeleteButtonsOpen, setIsEditDeleteButtonsOpen] = useState(false);
 
   const myProductCardRef = useRef(null);
@@ -27,14 +24,6 @@ const MyProductCard = ({ product, onLikeClick, onDeleteClick }) => {
 
   const closeMyProductModal = () => {
     setIsMyProductModalOpen(false);
-  };
-
-  const openDeleteProductModal = () => {
-    setIsDeleteProductModalOpen(true);
-  };
-
-  const closeDeleteProductModal = () => {
-    setIsDeleteProductModalOpen(false);
   };
 
   const openEditDeleteButtons = () => {
@@ -68,15 +57,14 @@ const MyProductCard = ({ product, onLikeClick, onDeleteClick }) => {
 
   return (
     <div className="product-card" ref={myProductCardRef}>
- {/*<img src={product.image} alt={product.name} />*/}
-      <img src={carPng} alt='' />
-      <h3>{product.name}</h3>
+      <img src={product.image} alt={product.productName} />
+      <h3>{product.productName}</h3>
       <p>{product.price} $</p>
       <div className='like-button-block'>
           <button className={`like-button ${isLiked ? "liked" : ""}`} onClick={handleLikeClick}>
             <img src={likeImg} alt=""/>
           </button>
-          <span>{product.likes}</span>
+          <span>{product.likes ? product.likes : '110'}</span>
           <button className='menu-button' onClick={openEditDeleteButtons}>
             <img className='menu-button__img' src={menuButton} alt=""/>
           </button>
@@ -88,19 +76,13 @@ const MyProductCard = ({ product, onLikeClick, onDeleteClick }) => {
           onCancel={closeMyProductModal}
         />
       )}
-      {isDeleteProductModalOpen && (
-        <DeleteProductModal
-          product={product}
-          onConfirm={onDeleteClick}
-          onCancel={closeDeleteProductModal}
-        />
-      )}
       {isEditDeleteButtonsOpen && (
         <EditDeleteButtons
           onEditClick={openMyProductModal}
-          onDeleteClick={openDeleteProductModal}
+          onDeleteClick={() => onDeleteClick(product.id)}
         />
-      )}    </div>
+      )}
+    </div>
   );
 };
 

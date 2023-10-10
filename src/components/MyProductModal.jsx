@@ -1,23 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import closeButton from '../img/close-button.svg';
-import productImg from '../img/product-img.png';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { updateProduct } from '../redux/productsSlice';
 
 const MyProductModal = ({ product, onSave, onCancel }) => {
+  const dispatch = useDispatch();
   const [editedProduct, setEditedProduct] = useState({ ...product });
-  const [isChangesSaved, setIsChangesSaved] = useState(false);
 
+    const [selectedProductId, setSelectedProductId] = useState(product.id);
+
+    useEffect(() => {
+      setSelectedProductId(product.id);
+    }, [product.id]);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setEditedProduct({ ...editedProduct, [name]: value });
-    setIsChangesSaved(false);
+    const updatedProduct = { ...editedProduct, [name]: value };
+    setEditedProduct(updatedProduct);
   };
 
   const handleSaveClick = () => {
-
-    onSave(editedProduct);
-    setIsChangesSaved(true);
+      dispatch(updateProduct({ ...editedProduct, id: selectedProductId }));
+      onSave(editedProduct);
   };
+
 
   return (
       <div className='modal-overlay'>
@@ -26,12 +31,12 @@ const MyProductModal = ({ product, onSave, onCancel }) => {
                   <img src={closeButton} alt=""/>
               </button>
                <div className="product-information-images">
-                   <img src={productImg} alt=""/>
+                   <img src={editedProduct.image} alt="Product" />
                </div>
                 <input
                   type="text"
-                  name="name"
-                  value={editedProduct.name}
+                  name="productName"
+                  value={editedProduct.productName}
                   onChange={handleInputChange}
                 />
                 <input
@@ -40,22 +45,21 @@ const MyProductModal = ({ product, onSave, onCancel }) => {
                   value={editedProduct.price}
                   onChange={handleInputChange}
                 />
-                <textarea
-                  name="description"
-                  value={editedProduct.description}
+                <input
+                  name="shortDescription"
                   onChange={handleInputChange}
+                  value={editedProduct.shortDescription}
                 />
                 <textarea
-                  name="description"
-                  value={editedProduct.description}
+                  name="fullDescription"
+                  value={editedProduct.fullDescription}
                   onChange={handleInputChange}
                 />
-              <button className='save-information' onClick={handleSaveClick} disabled={isChangesSaved}>
+              <button className='save-information' onClick={handleSaveClick}>
                 Сохранить
               </button>
         </div>
       </div>
-
   );
 };
 

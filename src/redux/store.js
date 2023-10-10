@@ -1,7 +1,13 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import userReducer from './userReducer'; // Подставьте свой корневой редюсер, если он у вас есть
+import { configureStore } from '@reduxjs/toolkit';
+import userSlice from './userSlice';
+import productsSlice from './productsSlice';
 
-const store = createStore(userReducer, applyMiddleware(thunk));
+const store = configureStore({
+  reducer: {
+    user: userSlice,
+    products: productsSlice,
+
+  },
+});
 
 export default store;

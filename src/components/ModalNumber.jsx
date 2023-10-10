@@ -1,107 +1,45 @@
-import React, { useState, useEffect } from "react";
-import closeButton from "../img/close-button.svg";
+import React, { useState } from "react";
+import addNumberIcon from '../img/addNumberIcon.svg';
+import ConfirmPhoneNumber from "./ConfirmPhoneNumber";
 
-const ModalNumber = ({ isOpen, onCancel }) => {
+const ModalNumber = ({ onCancel }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [verificationCode, setVerificationCode] = useState("");
-  const [isCodeSent, setIsCodeSent] = useState(false);
-  const [isCodeValid, setIsCodeValid] = useState(false);
-  const [isTimerActive, setIsTimerActive] = useState(false);
-  const [timer, setTimer] = useState(59);
-
-  useEffect(() => {
-    if (isCodeSent) {
-      startTimer();
-    }
-  }, [isCodeSent]);
-
-  const startTimer = () => {
-    setIsTimerActive(true);
-    let countdown = 59;
-    const timerInterval = setInterval(() => {
-      if (countdown > 0) {
-        countdown -= 1;
-        setTimer(countdown);
-      } else {
-        setIsTimerActive(false);
-        clearInterval(timerInterval);
-      }
-    }, 1000);
-  };
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   const handlePhoneNumberChange = (e) => {
     setPhoneNumber(e.target.value);
   };
 
-  const handleVerificationCodeChange = (e) => {
-    setVerificationCode(e.target.value);
-  };
-
   const handleSendCode = () => {
-    setIsCodeSent(true);
-  };
-
-  const handleResendCode = () => {
-    setIsCodeSent(true);
-    setTimer(59);
-    setIsTimerActive(true);
-  };
-
-  const handleVerifyCode = () => {
-    if (verificationCode === "1234") {
-      setIsCodeValid(true);
-      setIsTimerActive(false);
-    } else {
-      setIsCodeValid(false);
-    }
+    setIsConfirmModalOpen(true);
   };
 
   return (
-    <div className={`modal ${isOpen ? "open" : ""}`}>
-      <div className="delete-product-modal">
-        <div className="modal-content">
-          <button className="close-button" onClick={onCancel}>
-            <img src={closeButton} alt=""/>
-          </button>
-          <h2>Изменить номер телефона</h2>
-          <p>Введите номер телефона:</p>
-          <input
-            type="text"
-            placeholder="0(000) 000 000"
-            value={phoneNumber}
-            onChange={handlePhoneNumberChange}
-          />
-          {isCodeSent ? (
-            <>
-              <p>Введите код из SMS:</p>
-              <input
-                type="text"
-                placeholder="0000"
-                value={verificationCode}
-                onChange={handleVerificationCodeChange}
-              />
-              {isCodeValid ? (
-                <p className="success-message">Код подтвержден!</p>
-              ) : (
-                <p className="error-message">Неверный код. Попробуйте еще раз.</p>
-              )}
-              {isTimerActive ? (
-                <p>Повторный запрос через: 00:{timer < 10 ? `0${timer}` : timer}</p>
-              ) : (
-                <button onClick={handleResendCode}>Отправить код еще раз</button>
-              )}
-            </>
-          ) : (
-            <p>Мы отправим вам SMS с кодом подтверждения</p>
-          )}
-          <button
-            onClick={isCodeSent ? handleVerifyCode : handleSendCode}
-            disabled={isCodeSent && (!verificationCode || verificationCode.length !== 4)}
-          >
-            {isCodeSent ? "Подтвердить" : "Далее"}
-          </button>
+    <div className="modal-number-overlay">
+      <div className='modal-number-content-wrapper'>
+        <h4 className='modal-number-title'>Изменить номер телефона</h4>
+        <div className='modal-number-content'>
+          <form>
+            <img src={addNumberIcon} alt='numberIcon' />
+            <h5 className='modal-number-subtitle'>Введите номер телефона</h5>
+            <h6 className='modal-number-subsubtitle'>Мы отправим вам СМС с кодом подтверждения</h6>
+            <input
+              type="text"
+              placeholder="0(000)000 000"
+              className='number-modal-input'
+              value={phoneNumber}
+              onChange={handlePhoneNumberChange}
+            />
+            <button type="button" onClick={handleSendCode} className='number-modal-button'>
+              Далее
+            </button>
+          </form>
+          <button onClick={onCancel}>Отмена</button>
         </div>
       </div>
+      {isConfirmModalOpen && (
+        <ConfirmPhoneNumber onCancel={() => setIsConfirmModalOpen(false)} />
+      )}
     </div>
   );
 };

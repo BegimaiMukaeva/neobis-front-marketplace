@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import store from './redux/store';
+import store from './redux/store.js';
 import App from './App';
 import './style/style.css';
 import { ToastContainer } from 'react-toastify';

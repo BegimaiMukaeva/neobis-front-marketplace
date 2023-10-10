@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setUserEmail, setUserUsername } from "../redux/userSlice";
 import MobiMarket from "../components/MobiMarket";
 import backButton from '../img/back-icon.svg';
-import axios from 'axios';
 
 const SignUp = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [username, setUsername] = useState(localStorage.getItem("tempUsername") || "");
@@ -31,30 +32,11 @@ const SignUp = () => {
     setIsButtonActive(isUsernameValid && isEmailValid);
   };
 
-  const handleNextClick = async () => {
-    try {
-      const response = await axios.get(
-        `https://neobis-project-2.up.railway.app/api/auth/credentialsCheck?login=${username}&email=${email}`
-      );
 
-      if (response.data) {
-        toast.error("Данный пользователь уже зарегистрирован", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeButton: false,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "light",
-        });
-      } else {
-        localStorage.setItem("tempUsername", username);
-        localStorage.setItem("tempEmail", email);
-        navigate("/password");
-      }
-    } catch (error) {
-      console.error("Error checking credentials:", error);
-    }
+  const handleNextClick = () => {
+    dispatch(setUserEmail(email));
+    dispatch(setUserUsername(username));
+    navigate("/password");
   };
 
   return (

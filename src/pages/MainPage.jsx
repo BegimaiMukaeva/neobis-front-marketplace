@@ -1,70 +1,94 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MainProduct from "../components/MainProduct";
 import AddProduct from "../components/AddProduct";
 import logoImg from "../img/logo.png";
 import { Link } from "react-router-dom";
 import autoProfileImage from "../img/human-profeli-min.svg";
-import ProductCard from "../components/ProductCard";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
-const MainPage = () => {
-  const [products, setProducts] = useState([]); // Список товаров
+const MainPage = ({isChoosingProfileImage, chosenImage}) => {
+  const { username, email } = useSelector((state) => state.user);
+  const [products, setProducts] = useState([]);
   const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
 
-  const initialProducts = [
-    {
-      id: 1,
-      name: "BMW M4 Coupe: A Two-Door",
-      price: 23000,
-      likes: 100,
-      // image: "../img/car.png",
-    },
-    {
-      id: 2,
-      name: "BMW M4 Coupe: A Two-Door",
-      price: 23000,
-      likes: 80,
-      // image: "../img/car.png",
-    },
-  ];
-  const handleAddProduct = (productInfo, images) => {
-    setIsAddProductModalOpen(false);
+  useEffect(() => {
+  async function fetchProducts() {
+    try {
+      const token = localStorage.getItem('accessToken');
+
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'accept': '*/*',
+      };
+
+      const response = await axios.get(
+        "https://neobis-project-2.up.railway.app/api/product/findAllProducts",
+        { headers }
+      );
+
+      if (response.status === 200) {
+        const productList = response.data;
+        setProducts(productList);
+      } else {
+        console.error("Error fetching products:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  }
+  fetchProducts();
+  }, []);
+
+  const handleAddProduct = (newProduct) => {
+  const updatedProducts = [...products, newProduct];
+  setProducts(updatedProducts);
+};
+
+  const addNewProduct = (newProduct) => {
+    const updatedProducts = [...products, newProduct];
+    setProducts(updatedProducts);
   };
+
   const handleCloseModal = () => {
     setIsAddProductModalOpen(false);
   };
 
-
-  const username = "bemchik";
-  const email = "begimai@gmail.com";
-
   return (
     <div className="main-page">
       <header className="header">
-          <div className="logo">
+        <div className="logo">
           <img src={logoImg} alt="" />
         </div>
-          <div className='header__button'>
-              <button onClick={() => setIsAddProductModalOpen(true)}>
-                Подать объявление
-              </button>
-              <Link to="/success-sign-up">
-                  <div className="user-profile">
-                      <div>
-                          <p>{username}</p>
-                          <p>{email}</p>
-                      </div>
-                      <img src={autoProfileImage} alt="Фото профиля" />
-                  </div>
-              </Link>
-          </div>
+        <div className="header__button">
+          <button onClick={() => setIsAddProductModalOpen(true)}>
+            Подать объявление
+          </button>
+          <Link to="/success-sign-up">
+            <div className="user-profile">
+              <div>
+                <p>{username}</p>
+                <p>{email}</p>
+              </div>
+              <img
+                src={autoProfileImage}
+                alt="Profile"
+                className="profile-image"
+              />
+            </div>
+          </Link>
+        </div>
       </header>
-      {isAddProductModalOpen && <AddProduct onAddProduct={handleAddProduct} onCancel={handleCloseModal} />}
+      {isAddProductModalOpen && (
+        <AddProduct
+          onAddProduct={handleAddProduct}
+          onCancel={handleCloseModal}
+          addNewProduct={addNewProduct}
+        />
+      )}
       <div className="product-list">
-        {initialProducts.map((product) => (
-          <MainProduct
-              key={product.id}
-              product={product}
-          />
+        {products.map((product) => (
+          <MainProduct key={product.id} product={product} />
         ))}
       </div>
     </div>

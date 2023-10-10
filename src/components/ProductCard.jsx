@@ -20,7 +20,6 @@ const ProductCard = ({ product, onLikeClick, onCardClick }) => {
 
   return (
     <div className="product-card" onClick={handleCardClick}>
-      {/*<img src={product.image} alt='' />*/}
       <img src={carPng} alt='' />
       <h3>{product.name}</h3>
       <p>{product.price} $</p>

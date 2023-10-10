@@ -224,6 +224,7 @@ input:focus, textarea:focus {
     border-radius: 100px;
     object-fit: cover;
     margin-right: 10px;
+    margin-bottom: 20px;
 }
 .profile-info {
     display: flex;
@@ -317,6 +318,30 @@ input:focus, textarea:focus {
     flex-direction: column;
     margin-bottom: 40px;
 }
+
+.profile-image-label {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    color: blue;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+.profile-image-label::before {
+    content: 'Выбрать фотографию';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    border-radius: 12px;
+    border: 2px solid blue;
+    height: 28px;
+}
+
+
 .profile-form {
     display: flex;
     justify-content: center;
@@ -373,15 +398,15 @@ input:focus {
 .profile-image-input::-webkit-file-upload-button {
   visibility: hidden;
 }
-.profile-image-input {
-    color: #5458EA;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 24px;
-    cursor: pointer;
-    margin-top: 13px;
-    margin-left: -90px;
-}
+/*.profile-image-input {*/
+/*    color: #5458EA;*/
+/*    font-size: 16px;*/
+/*    font-weight: 600;*/
+/*    line-height: 24px;*/
+/*    cursor: pointer;*/
+/*    margin-top: 13px;*/
+/*    margin-left: -90px;*/
+/*}*/
     /* Стили для модального окна */
     .modal {
       position: fixed;
@@ -444,8 +469,8 @@ input:focus {
     margin: 6px;
 }
 .product-card img {
-    width: 142px;
-    height: 85px;
+    max-width: 142px;
+    max-height: 85px;
     border-radius: 6px;
 }
 .product-card h3 {
@@ -748,8 +773,178 @@ input:focus {
     width: 97%;
     height: 40px;
     margin: 5px;
-    background: #F7F6F9;
     border: none;
     border-radius: 12px;
     padding: 5px;
+}
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+.profile-image-product {
+    max-width: 76px;
+    max-height: 96px;
+    border-radius: 12px;
+    position: relative;
+    z-index: 100;
+    cursor: pointer;
+}
+.modal-number-overlay {
+  position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-number-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    padding: 40px;
+    border-radius: 40px;
+    width: 565px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.modal-number-content {
+    width: 335px;
+}
+
+.modal-number-title {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.modal-number-subtitle {
+  font-size: 20px;
+  font-weight: 500;
+  color: #494949;
+  margin: 0;
+}
+
+.modal-number-subsubtitle {
+  font-size: 16px;
+  font-weight: normal;
+  color: #C0C0C0;
+  margin: 10px 0px 20px 0px;
+}
+
+.number-modal-input {
+  font-size: 28px;
+  font-family: 'Montserrat', sans-serif;
+  background: none;
+  text-align: center;
+  border: none;
+  margin-bottom: 30px;
+  outline: none;
+  font-weight: 500;
+  letter-spacing: 3px;
+}
+
+.number-modal-button {
+  width: 335px;
+  height: 65px;
+  background-color: #5458EA;
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: scale 0.3s ease, background-color 0.3s ease;
+}
+
+.number-modal-button:hover {
+  scale: 0.95;
+  background-color: #323486;
+}
+
+.number-modal-button:disabled {
+  background-color: #F7F7F8;
+  color: #9CA4AB;
+}
+
+.number-modal-button:disabled:hover {
+  background-color: #F7F7F8;
+  color: #9CA4AB;
+  scale: 1.0;
+}
+.close-button:hover {
+  scale: 1.4;
+  color: #5458EA;
+}
+
+/*////////////////////*/
+.code-modal-input {
+  font-size: 28px;
+  font-family: 'Montserrat', sans-serif;
+  background: none;
+  border: none;
+  text-align: center;
+  margin-top: 20px;
+  font-weight: 500;
+  letter-spacing:10px;
+  margin-bottom: 30px;
+  outline: none;
+ }
+
+ .confirm-resend-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #5458EA;
+  cursor: pointer;
+  transition: scale 0.3s ease, color 0.3s ease;
+ }
+
+ .confirm-resend-button:hover {
+  scale: 1.1;
+  color: #323486;
+  }
+
+.confirm-resend-button:disabled {
+  scale: 1.0;
+  color: #C0C0C0;
+}
+
+.confirm-resend-button:disabled:hover {
+  cursor: default;
+}
+
+ .button-content {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+ }
+
+ .timer {
+   margin-top: 4px;
+ }
+
+
+ .confirm-close-button {
+  position: absolute;
+  top: 29%;
+  left: 35%;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: scale 0.3s ease, color 0.3s ease;
+}
+
+.confirm-close-button:hover {
+  scale: 1.4;
+  color: #5458EA;
 }

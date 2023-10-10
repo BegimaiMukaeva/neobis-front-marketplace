@@ -1,31 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Modal from "../components/Modal.jsx";
 import ModalNumber from "../components/ModalNumber";
-import autoProfileImage from '../img/human-profeli-min.svg'
+import autoProfileImage from '../img/human-profeli-min.svg';
 import backButton from "../img/back-icon.svg";
 import ProfileMenu from "../components/ProfileMenu";
+import { setUserData } from "../redux/userSlice";
 
 const ProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalNumberOpen, setIsModalNumberOpen] = useState(false);
   const [isChoosingProfileImage, setIsChoosingProfileImage] = useState(true);
   const [chosenImage, setChosenImage] = useState("");
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
 
-  // const { username, email } = useSelector((state) => state.user);
-  const username = "bemchik";
-  const email = "begimai@gmail.com";
-
-  const [userData, setUserData] = useState({
-    username: "",
-    firstName: "",
-    lastName: "",
-    middleName: "",
-    birthDate: "",
-    email: "",
-    profileImage: "",
-  });
+  const { username, email } = user;
 
   useEffect(() => {
   }, []);
@@ -37,12 +28,9 @@ const ProfilePage = () => {
   const closeModalNumber = () => {
     setIsModalNumberOpen(false);
   };
+
   const openModalNumber = () => {
-      setIsModalNumberOpen(true);
-  };
-
-
-  const handleLogoutConfirm = () => {
+    setIsModalNumberOpen(true);
   };
 
   const handleLogoutCancel = () => {
@@ -58,29 +46,6 @@ const ProfilePage = () => {
     }
   };
 
-  const handleNameInputChange = (event) => {
-    const { name, value } = event.target;
-
-    const isNameValid = /^[A-Za-z]+$/i.test(value);
-
-    setUserData({
-      ...userData,
-      [name]: isNameValid ? value : "",
-    });
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-
-    const cleanedValue = value.replace(/[^\d.]/g, "");
-    const formattedValue = cleanedValue.replace(/\.+/g, ".");
-
-    setUserData({
-      ...userData,
-      [name]: formattedValue,
-    });
-  };
-
   return (
     <div className="profile-page">
       <ProfileMenu
@@ -93,8 +58,8 @@ const ProfilePage = () => {
       <div className="profile-content">
         <div className="profile-header">
           <div className="back-button-profile">
-            <Link to="/main-page" className='mobi-market__back-text'>
-              <img src={backButton} alt=""/>
+            <Link to="/main-page" className="mobi-market__back-text">
+              <img src={backButton} alt="" />
               Назад
             </Link>
             <h2>Профиль</h2>
@@ -102,18 +67,19 @@ const ProfilePage = () => {
         </div>
         <div className="profile-image-container">
           <img
-            src={isChoosingProfileImage ? autoProfileImage : chosenImage}
-            alt="Profile"
-            className="profile-image"
-          />
+              src={isChoosingProfileImage ? autoProfileImage : chosenImage}
+              alt="Profile"
+              className="profile-image"
+            />
           <label htmlFor="profile-image-input" className="profile-image-label">
             <input
               type="file"
               accept="image/*"
               className="profile-image-input"
               onChange={handleImageChange}
-              title=""
+              id="profile-image-input"
             />
+            {isChoosingProfileImage ? "Выбрать фотографию" : null}
           </label>
         </div>
         <div className="profile-form">
@@ -122,55 +88,41 @@ const ProfilePage = () => {
               type="text"
               name="firstName"
               placeholder="Имя"
-              value={userData.firstName}
-              onChange={handleNameInputChange}
+              value={user.firstName}
             />
             <input
               type="text"
               name="lastName"
               placeholder="Фамилия"
-              value={userData.lastName}
-              onChange={handleNameInputChange}
+              value={user.lastName}
             />
-            <input
-              type="text"
-              name="middleName"
-              placeholder="Имя пользователя"
-              value={userData.username}
-              onChange={handleNameInputChange}
-            />
+            <div className="profile-form">
+              <p>Имя пользователя: {username}</p>
+            </div>
             <input
               type="text"
               name="birthDate"
               placeholder="Дата рождения (дд.мм.гггг)"
-              value={userData.birthDate}
-              onChange={handleInputChange}
+              value={user.birthDate}
             />
           </form>
         </div>
-        <div className='add-number'>
+        <div className="add-number">
           <button className="add-number-button" onClick={openModalNumber}>
             Добавить номер
           </button>
           {isModalNumberOpen && (
-            <ModalNumber
-              isOpen={isModalNumberOpen}
-              onCancel={closeModalNumber}
-            />
+            <ModalNumber isOpen={isModalNumberOpen} onCancel={closeModalNumber} />
           )}
-          <input
-            type="text"
-            placeholder='0(000) 000 000'
-          />
+          <input type="text" placeholder="0(000) 000 000" />
         </div>
-        <div className='profile-form'>
-          <p>Почта: {email}</p>
+        <div className="profile-form">
+          <p>Почта:{user.email}</p>
         </div>
       </div>
       {isModalOpen && (
         <Modal
           title="Вы действительно хотите выйти с приложения?"
-          onConfirm={handleLogoutConfirm}
           onCancel={handleLogoutCancel}
         />
       )}

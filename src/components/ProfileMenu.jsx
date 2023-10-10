@@ -6,19 +6,12 @@ import myProduct from "../img/my-product.svg";
 import outLock from "../img/outLock.svg";
 import directionRight from "../img/direction-right.svg";
 import GoOut from "../components/GoOut";
+import { useSelector } from "react-redux";
 
-const ProfileMenu = ({
-  username,
-  email,
-  isChoosingProfileImage,
-  chosenImage,
-  handleLogout,
-}) => {
+const ProfileMenu = ({ isChoosingProfileImage, chosenImage }) => {
+  const {username, email } = useSelector(state => state.user);
+
   const [isGoOutModalOpen, setIsGoOutModalOpen] = useState(false);
-
-  const handleGoOutConfirm = () => {
-
-  };
 
   const handleGoOutCancel = () => {
     setIsGoOutModalOpen(false);
@@ -32,7 +25,7 @@ const ProfileMenu = ({
     <div className="profile-menu">
       <div className="profile-info">
         <div className="profile-info__img">
-          <Link to='/success-sign-up'>
+          <Link to="/success-sign-up">
             <img
               src={isChoosingProfileImage ? autoProfileImage : chosenImage}
               alt="Profile"
@@ -42,29 +35,51 @@ const ProfileMenu = ({
         </div>
         <div className="profile-info__text">
           <div>
-            <Link to='/success-sign-up'>Имя пользователя: {username}</Link>
+            <Link to="/success-sign-up">Имя пользователя: {username}</Link>
           </div>
           <div>
-            <Link to='/success-sign-up'>Почта: {email}</Link>
+            <Link to="/success-sign-up">Почта: {email}</Link>
           </div>
         </div>
       </div>
       <div className="profile-menu-options">
-        <div className='profile-menu-options__menu'>
+        <div className="profile-menu-options__menu">
           <div>
-            <img className='profile-menu-options__menu-img' src={likePage} alt=""/>
-            <Link to="/favorites" className='profile-menu-options__like'>Понравившиеся</Link>
+            <img
+              className="profile-menu-options__menu-img"
+              src={likePage}
+              alt=""
+            />
+            <Link to="/favorites" className="profile-menu-options__like">
+              Понравившиеся
+            </Link>
           </div>
-          <Link to="/favorites"><img className='profile-menu-options__menu-direction-right' src={directionRight} alt=""/></Link>
+          <Link to="/favorites">
+            <img
+              className="profile-menu-options__menu-direction-right"
+              src={directionRight}
+              alt=""
+            />
+          </Link>
         </div>
-        <div className='profile-menu-options__menu'>
+        <div className="profile-menu-options__menu">
           <div>
-            <img className='profile-menu-options__menu-img'  src={myProduct} alt=""/>
+            <img
+              className="profile-menu-options__menu-img"
+              src={myProduct}
+              alt=""
+            />
             <Link to="/my-products">Мои товары</Link>
           </div>
-          <Link to="/my-products"><img className='profile-menu-options__menu-direction-right' src={directionRight} alt=""/></Link>
+          <Link to="/my-products">
+            <img
+              className="profile-menu-options__menu-direction-right"
+              src={directionRight}
+              alt=""
+            />
+          </Link>
         </div>
-        <div className='profile-menu-options__menu'>
+        <div className="profile-menu-options__menu">
           <div className="profile-menu-options__menu_button">
             <img src={outLock} alt="" />
             <button onClick={handleLogoutClick}>Выйти</button>
@@ -72,7 +87,7 @@ const ProfileMenu = ({
         </div>
       </div>
       {isGoOutModalOpen && (
-        <GoOut onConfirm={handleGoOutConfirm} onCancel={handleGoOutCancel} />
+        <GoOut onCancel={handleGoOutCancel} />
       )}
     </div>
   );

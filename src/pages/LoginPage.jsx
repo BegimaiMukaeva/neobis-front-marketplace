@@ -3,11 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import MobiMarket from "../components/MobiMarket.jsx";
 import axios from 'axios';
-
+import jwt_decode from "jwt-decode";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -32,7 +31,7 @@ const LoginPage = () => {
     setShowPassword(!showPassword);
   };
 
-const handleLogin = async (e) => {
+  const handleLogin = async (e) => {
   e.preventDefault();
 
   try {
@@ -51,10 +50,25 @@ const handleLogin = async (e) => {
         },
       }
     );
-    if (response.data.status === 200) {
+    console.log(response.data)
+    if (response.status === 200) {
+      const { token } = response.data;
+      const decodedToken = jwt_decode(token);
+
+      localStorage.setItem('accessToken', token);
+      // localStorage.setItem('accessToken', response.data.accessToken);
       navigate("/success-sign-up");
     } else {
-      throw new Error("Неверный статус ответа");
+      console.error("Error logging in:", response.data.message);
+      toast.error("Неверный логин или пароль", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeButton: false,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
     }
   } catch (error) {
     console.error("Error logging in:", error);
